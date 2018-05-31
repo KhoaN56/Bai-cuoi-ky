@@ -28,10 +28,16 @@ class Image : Matrix
 			delete pixels;
 		}
 		void setter();
+		void setPixels(int **matrix);
+		void setPixel(int value, int x, int y)	{pixels[x][y] = value;}
+		int getPixel(int x, int y)	{return this->pixels[x][y];}
+		void outPutFile();
+//		int getPixel()	{return pixels[0][0];}
 		int getterWidth() {return width;}
 		int getterHeight()	{return height;}
 		int getterGrayLevel()	{return graylevel;}
 		int **getterPixels()	{return pixels;}
+		void negative();
 };
 class Filter : Matrix
 {
