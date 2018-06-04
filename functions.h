@@ -2,6 +2,7 @@
 #include<iostream>
 #include<cstring>
 #include"class.h"
+#define Round(a)  int(a+0.5)
 using namespace std;
 //void Matrix::setter(Image pic)
 //{
@@ -83,26 +84,36 @@ void Image::outPutFile()
 	ofs.close();
 }
 
-void Image::negative()
+void Filter::negative(Image &pic)
 {
-	int i, j;
-//	int **matrix = pic.getterPixels();
-//	cout << matrix << endl;
-//	cout << pic.getterPixels() << endl;
-	for(i = 0; i < height; ++i)
+	int i, j, w, h, g;
+	w = pic.getterWidth();
+	h = pic.getterHeight();
+	g = pic.getterGrayLevel();
+	int **matrix = pic.getterPixels();
+	for(i = 0; i < h; ++i)
 	{
-		for(j = 0; j < width; ++j)
+		for(j = 0; j < w; ++j)
 		{
-			pixels[i][j] = graylevel - pixels[i][j];
-////			matrix[i][j] = graylevel - matrix[i][j];
-////			pic.setPixel(graylevel-pic.getPixel(i,j),i,j);
-//			cout << setw(4) << pixels[i][j];
+			matrix[i][j] = g - matrix[i][j];
 		}
-//		cout << endl;
 	}
-//	pic.setPixels(matrix);
-//	cout << matrix << endl;
-//	Delete(matrix);
+}
+
+void Filter::logarite(Image &pic)
+{
+	int i, j, w, h, g;
+	w = pic.getterWidth();
+	h = pic.getterHeight();
+	g = pic.getterGrayLevel();
+	int **matrix = pic.getterPixels();
+	for(i = 0; i < h; ++i)
+	{
+		for(j = 0; j < w; ++j)
+		{
+			matrix[i][j] = Round(log(1 + matrix[i][j]));
+		}
+	}
 }
 
 void Image::setPixels(int **matrix)

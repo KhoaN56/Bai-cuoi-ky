@@ -2,18 +2,17 @@
 #include<fstream>
 #include<stdlib.h>
 #include<iomanip>
+#include<cmath>
 #include"class.h"
 #include"functions.h"
 using namespace std;
 int main()
 {
 	Image haha;
-	Negative filter;
+	Filter f;
 	haha.setter();
-	haha.negative();
-//	filter.transform(haha);
+//	haha.negative();
+	f.logarite(haha);
 	haha.outPutFile();
-		cout << "adsafdsf" << endl;
-		cout << "adsafdsf" << endl;
 	return 0;
 }

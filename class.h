@@ -37,7 +37,6 @@ class Image : Matrix
 		int getterHeight()	{return height;}
 		int getterGrayLevel()	{return graylevel;}
 		int **getterPixels()	{return pixels;}
-		void negative();
 };
 class Filter : Matrix
 {
@@ -54,9 +53,6 @@ class Filter : Matrix
 				delete[] pixels[i];
 			delete pixels;
 		}
-};
-class Negative : Filter
-{
-	public:
-		void transform(Image);
+		void negative(Image&);
+		void logarite(Image&);
 };
