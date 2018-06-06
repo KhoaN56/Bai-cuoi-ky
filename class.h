@@ -55,4 +55,5 @@ class Filter : Matrix
 		}
 		void negative(Image&);
 		void logarite(Image&);
+		void histogram(Image&);
 };

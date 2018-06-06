@@ -47,38 +47,28 @@ void Image::setter()
 		for(j = 0; j < width ; ++j)
 		{
 			pixels[i][j] = strtol(c, &c, 10);
-//			cout << setw(4) << pixels[i][j] << " ";
 		}
-//		cout << endl;
 	}
 	ifs.close();
 }
 
 void Image::outPutFile()
 {
-//		cout << pixel[0] << endl;
 	ofstream ofs;
-//	char buffer[100];
-//	char *c;
 	int i, j;
-//	for(i = 0; i < height; ++i)
-//		cout << *pixels[i] << endl;
 	ofs.open("temp.ascii.pgm", ios_base::out);
 	if (ofs.fail()==true)
 		cout<<"Failed to open this file"<<endl;
 	ofs << "P2" << endl;
 	ofs << "# temp.ascii.pgm" << endl;
 	ofs << width << " " << height << endl;
-//	cout<<width<<height;
 	ofs << graylevel << endl;
 	for(i = 0; i < height; ++i)
 	{
 		for(j = 0; j < width; ++j)
 		{
 			ofs << getPixel(i,j) << " ";
-//			cout<<getPixel(i,j)<<" ";
 		}
-//		cout<<endl;
 		ofs << endl;
 	}
 	ofs.close();
@@ -92,12 +82,8 @@ void Filter::negative(Image &pic)
 	g = pic.getterGrayLevel();
 	int **matrix = pic.getterPixels();
 	for(i = 0; i < h; ++i)
-	{
 		for(j = 0; j < w; ++j)
-		{
 			matrix[i][j] = g - matrix[i][j];
-		}
-	}
 }
 
 void Filter::logarite(Image &pic)
@@ -108,12 +94,31 @@ void Filter::logarite(Image &pic)
 	g = pic.getterGrayLevel();
 	int **matrix = pic.getterPixels();
 	for(i = 0; i < h; ++i)
-	{
 		for(j = 0; j < w; ++j)
-		{
 			matrix[i][j] = Round(log(1 + matrix[i][j]));
-		}
+}
+
+void Filter::histogram(Image &pic)
+{
+	int i, j, w, h, g, sumpixel;
+	w = pic.getterWidth();
+	h = pic.getterHeight();
+	g = pic.getterGrayLevel();
+	int **matrix = pic.getterPixels();
+	float p[g+1] = {0};
+	for(i = 0; i < h; ++i)
+		for(j = 0; j < w; ++j)
+			++p[matrix[i][j]];
+	sumpixel = w * h;
+	for(i = 0; i < g+1; ++i)
+	{
+		p[i] = p[i]*1.0/sumpixel;
+		if(i != 0)
+			p[i] += p[i-1];
 	}
+	for(i = 0; i < h; ++i)
+		for(j = 0; j < w; ++j)
+			matrix[i][j] = Round(p[matrix[i][j]] * g);
 }
 
 void Image::setPixels(int **matrix)

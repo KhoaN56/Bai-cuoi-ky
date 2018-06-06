@@ -11,8 +11,8 @@ int main()
 	Image haha;
 	Filter f;
 	haha.setter();
-//	haha.negative();
-	f.logarite(haha);
+	f.histogram(haha);
+//	f.logarite(haha);
 	haha.outPutFile();
 	return 0;
 }
