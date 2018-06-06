@@ -56,4 +56,5 @@ class Filter : Matrix
 		void negative(Image&);
 		void logarite(Image&);
 		void histogram(Image&);
+		void smoothing(Image&); 
 };

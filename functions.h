@@ -121,6 +121,42 @@ void Filter::histogram(Image &pic)
 			matrix[i][j] = Round(p[matrix[i][j]] * g);
 }
 
+void Filter::smoothing(Image &pic)
+{
+	int i, j, w, h, g;
+	w = pic.getterWidth();
+	h = pic.getterHeight();
+	g = pic.getterGrayLevel();
+	width = w+2;
+	height = h+2;
+	pixels = new int*[height];
+	for(i = 0; i < height; ++i)	pixels[i] = new int[width];
+	int **matrix = pic.getterPixels();
+	for(i = 0; i < h; ++i)
+	{
+		j = 0;
+		pixels[i+1][j] = matrix[i][j];		//j = 0
+		for(; j < w; ++j)
+		{
+			pixels[i+1][j+1] = matrix[i][j];
+			if(i == 0)
+				pixels[i][j+1] = matrix[i][j];
+			else if(i == h - 1)
+				pixels[i+2][j+1] = matrix[i][j];
+		}
+		pixels[i+1][j+1] = matrix[i][j-1]; //j = w
+	}
+	pixels[0][0] = matrix[0][0];
+	pixels[0][width - 1] = matrix[0][w - 1];		
+	pixels[height - 1][0] = matrix[h - 1][0];
+	pixels[height - 1][width - 1] = matrix[h - 1][w - 1];
+	for(i = 1; i < height - 1; ++i)
+		for(j = 1; j < width - 1; ++j)
+			matrix[i-1][j-1] = (pixels[i][j] + pixels[i-1][j] + pixels[i+1][j] + pixels[i][j+1] + 
+			pixels[i][j+1] + pixels[i+1][j+1] + pixels[i-1][j+1] + pixels[i-1][j-1] + pixels[i+1][j-1])/9;
+	Delete(pixels);
+}
+
 void Image::setPixels(int **matrix)
 {
 	int i, j;
