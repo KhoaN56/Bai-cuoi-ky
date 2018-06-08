@@ -6,8 +6,6 @@ class Matrix
 		int width;
 		int height;
 		int **pixels;
-	public:
-		void setter(int , int);
 };
 class Image : Matrix
 {
@@ -27,7 +25,7 @@ class Image : Matrix
 				delete[] pixels[i];
 			delete pixels;
 		}
-		void setter();
+		void setter(char*);
 		void setPixels(int **matrix);
 		void setPixel(int value, int x, int y)	{pixels[x][y] = value;}
 		int getPixel(int x, int y)	{return this->pixels[x][y];}
@@ -56,5 +54,6 @@ class Filter : Matrix
 		void negative(Image&);
 		void logarite(Image&);
 		void histogram(Image&);
-		void smoothing(Image&); 
+		void smoothing(Image&);
+		void laplacian(Image&);
 };
