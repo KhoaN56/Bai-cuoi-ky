@@ -251,8 +251,14 @@ void Filter::laplacian(Image &pic)
 	filter[1][1] = 4;
 	for(i = 1; i < height - 1; ++i)
 		for(j = 1; j < width - 1; ++j)
+		{
 			matrix[i-1][j-1] = pixels[i][j]*filter[1][1] + pixels[i-1][j]*filter[0][1] + pixels[i+1][j]*filter[2][1] + pixels[i][j+1]*filter[1][2] + 
 			pixels[i][j-1]*filter[1][0] + pixels[i+1][j+1]*filter[2][2] + pixels[i-1][j+1]*filter[0][2] + pixels[i-1][j-1]*filter[0][0] + pixels[i+1][j-1]*filter[2][0];
+			if(matrix[i-1][j-1] < 0)
+				matrix[i-1][j-1] = pixels[i][j] - matrix[i-1][j-1];
+			else
+				matrix[i-1][j-1] += pixels[i][j];
+		}
 }
 
 void Image::setPixels(int **matrix)

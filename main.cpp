@@ -13,6 +13,9 @@ int main()
 	int choice, choice1, choice2;
 	Image picture;
 	Filter f;
+//	picture.setter("mona_lisa.ascii.pgm");
+//	f.logarite(picture);
+//	picture.outPutFile();
 	char *filename = new char[100];
 	do
 	{
